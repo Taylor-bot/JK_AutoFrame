@@ -1,0 +1,31 @@
+# 用例1 根据管理员名称
+-
+    interface: "门店组查询接口"
+    name: "根据管理员查询用例"
+    url: "/supermarket-stock/api/v1/sm-erp/stock/reportStoreGroupPageInfo"
+    headers: {
+        "authorization": "{token}",
+        "client_id": "yunchao_erp"
+    }
+    json: {
+        "pageSize": 10,
+        "pageNum": 1,
+        "storeCodes": [],
+        "operatorIds": ["1846099485894115328"]
+    }
+
+# 用例2 根据报货门店组名
+-
+    interface: "门店组查询接口"
+    name: "根据报货门店组名称查询用例"
+    url: "/supermarket-stock/api/v1/sm-erp/stock/reportStoreGroupPageInfo"
+    headers: {
+        "authorization": "{token}",
+        "client_id": "yunchao_erp"
+    }
+    json: {
+        "pageSize": 10,
+        "pageNum": 1,
+        "storeCodes": [],
+        "reportStoreGroupName": 1
+    }

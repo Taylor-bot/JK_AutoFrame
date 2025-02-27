@@ -1,8 +1,10 @@
 import requests
 
 
+# 简单使用发起的get请求
 class Test_send_request:
     session = requests.session()
+
     def test_start(self):
         url = 'http://47.107.116.139/phpwind/'
 

@@ -1,0 +1,20 @@
+user:
+  john:
+    username: 16676766666
+    password: asdfghjkl
+  laoShe:
+    username: 18275887305
+    password: sJDgGwH4e/x+llWlJlZ31g==
+    grantType: password
+    clientId: yunchao_erp
+
+base_url: https://supermarket-gw-test.juaiyouxuan.com
+
+mysql:
+  db: supermarket_order_test
+  host: pc-2zeb2coz9koniozf3.rwlb.rds.aliyuncs.com
+  password: RevaKquRqtRTB8N
+  port: 3306
+  user: mydb_supermarket_test
+
+login_url: https://oauth-server-test.juaiyouxuan.com

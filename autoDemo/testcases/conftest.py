@@ -1,10 +1,12 @@
 import os
 import json
 import pytest
+import yaml
 
 from autoDemo.common.tools import sep, get_project_path
 from autoDemo.common.login import login
 from autoDemo.common.mysql_operate import mysql
+
 
 @pytest.fixture
 def token():
@@ -39,6 +41,23 @@ def conn_database_fun():
 
     print(f'\n### close database')
     mysql.close()
+
+
+@pytest.fixture(scope='function')
+def writeTokenToYaml(token):
+    with open('storeGroup.yaml', 'r', encoding='utf-8') as file:
+        data = yaml.load(file, Loader=yaml.FullLoader)
+    # 替换authorization中的token
+    token = token('laoShe')
+    # 这里使用的for循环list 和 循环字典非常的优雅
+    for data_item in data:
+        for key, value in data_item['headers'].items():
+            if key == 'authorization':
+                data_item['headers'][key] = 'Bearer ' + token
+    return data
+
+
+
 
 
 # 该错误是因为在测试代码中直接调用了名为 get_token 的 fixture 函数。在 pytest 中，fixture 是通过依赖注入的方式自动提供给测试函数的参数，不应该被直接调用
