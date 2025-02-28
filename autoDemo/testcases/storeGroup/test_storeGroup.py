@@ -1,5 +1,6 @@
 import allure
 import pytest
+import yaml
 
 from autoDemo.common.commom_requests import CommonRequests
 
@@ -8,7 +9,6 @@ from autoDemo.common.commom_requests import CommonRequests
 
 @allure.feature("采购管理-自动报货门店组")
 class Test_storeGroup:
-
     @allure.title("查询自动报货门店组")
     @allure.description("测试查询门店组数量是否大于0")
     def test_findStoreGroup(self, token):
@@ -22,25 +22,59 @@ class Test_storeGroup:
         }
         res = CommonRequests(header).post_request('/supermarket-stock/api/v1/sm-erp/stock/reportStoreGroupPageInfo',
                                                   json=json)
-        # print(res.json())
+        print(res.json())
         assert res.json()['data']['total'] > 0
 
     @allure.title("查询自动报货门店组")
     @allure.description("测试根据管理者查询是否成功")
     @pytest.mark.parametrize("writeTokenToYaml", [0,1], indirect=True)
-    def test_findByManager(self, writeTokenToYaml):
+    def test_findByStoreGroupByArgs(self, writeTokenToYaml):
         args = writeTokenToYaml
         # print(args)
         # deepseek YYDS
         res = CommonRequests(args["headers"]).post_request(args["url"], json=args["json"])
         assert res.json()['data']['total'] > 0 and res.json()['success'] is True
 
+    # 测试用例有几个，index就是n-1！！！多了会报错
+    @allure.title("新增自动报货门店组")
+    @allure.description("测试新增根据区域是否成功")
     @pytest.mark.parametrize("writeToken",
                              [
-                                 {"filename": "addStoreGroup.yaml"}
+                                 {"filename": "addStoreGroup.yaml", "index": 0},
+                                 # {"filename": "addStoreGroup.yaml", "index": 1}
 
                              ],
                              indirect=True)
-    def test_readYamlFile(self, writeToken):
-        print(writeToken)
+    def test_addStoreGroup(self, writeToken):
+        args = writeToken
+        # print(args['json']['reportStoreGroupName'])
+        res = CommonRequests(args['headers']).post_request(args['url'], json=args['json'])
+        assert res.json()['success'] is True and res.json()['code'] == 200
 
+    # 输出新增的报货门店组的id
+    def findStoreGroupByName(self, token):
+        # 写入token到findStoreGroupByName.yaml文件
+        with open('findStoreGroupByName.yaml', 'r', encoding='utf-8') as file:
+            data = yaml.load(file, Loader=yaml.FullLoader)
+
+            data['headers']["authorization"] = 'Bearer ' + token('laoShe')
+            # 读取reportStoreGroupName并写入到findStoreGroupByName.yaml文件
+            with open('addStoreGroup.yaml', 'r', encoding='utf-8') as f:
+                addData = yaml.load(f, Loader=yaml.FullLoader)
+                data['json']['reportStoreGroupName'] = addData[0]['json']['reportStoreGroupName']
+
+            # print(data)
+            res = CommonRequests(data['headers']).post_request(data['url'], json=data['json'])
+            return res.json()['data']['list'][0]['id']
+
+
+
+    @allure.title("作废自动报货门店组")
+    @allure.description("作废自动报货门店组是否成功")
+    def test_cancelStoreGroup(self, token):
+        header = {"authorization": "Bearer " + token('laoShe'), 'client_id': 'yunchao_erp'}
+        json = {
+            "id": self.findStoreGroupByName(token),
+        }
+        res = CommonRequests(header).post_request('/supermarket-stock/api/v1/sm-erp/stock/cancellationReportStoreGroup', json=json)
+        print(res.json())

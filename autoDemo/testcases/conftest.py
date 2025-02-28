@@ -76,17 +76,27 @@ def writeTokenToYaml(request, token):
 @pytest.fixture(scope='function')
 def writeToken(request, token):
     filename = request.param["filename"]  # 动态获取文件名
+    # 使用request.param接收参数化传递的用例索引
+    case_index = request.param["index"]
     with open(filename, 'r', encoding='utf-8') as file:
         data = yaml.load(file, Loader=yaml.FullLoader)
-        print(type(data))
     # 替换authorization中的token
     token = token('laoShe')
-    # 这里使用的for循环list 和 循环字典非常的优雅
-    for data_item in data:
-        for key, value in data_item['headers'].items():
-            if key == 'authorization':
-                data_item['headers'][key] = 'Bearer ' + token
-    return data
+    cases = data[case_index]
+    cases['headers']["authorization"] = 'Bearer ' + token
+    yield cases
+    #
+    # with open(filename, 'r', encoding='utf-8') as file:
+    #     data = yaml.load(file, Loader=yaml.FullLoader)
+    #     print(type(data))
+    # # 替换authorization中的token
+    # token = token('laoShe')
+    # # 这里使用的for循环list 和 循环字典非常的优雅
+    # for data_item in data:
+    #     for key, value in data_item['headers'].items():
+    #         if key == 'authorization':
+    #             data_item['headers'][key] = 'Bearer ' + token
+    # return data
 
 # 该错误是因为在测试代码中直接调用了名为 get_token 的 fixture 函数。在 pytest 中，fixture 是通过依赖注入的方式自动提供给测试函数的参数，不应该被直接调用
 # 所以这里的写法不对，不能用main函数

@@ -1,0 +1,13 @@
+interface: 门店组查询接口
+name: 根据新增的门店进行查询
+url: /supermarket-stock/api/v1/sm-erp/stock/reportStoreGroupPageInfo
+headers:
+  authorization: 自动生成不填
+  client_id: yunchao_erp
+json:
+  pageSize: 10
+  pageNum: 1
+  storeCodes: []
+  reportStoreGroupName: 自动生成不填
+  status: 1
+
