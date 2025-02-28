@@ -2,6 +2,7 @@
 # 导入os包
 import os
 
+
 def get_project_path():
     """
     获取项目目录
@@ -15,6 +16,7 @@ def get_project_path():
     # 所以这里使用切片，把返回的路径切片到刚好为根目录的地方（方法不唯一）
     a = file_path[:file_path.find(project_name) + len(project_name)]
     return a
+
 
 def sep(path, add_sep_before=False, add_sep_after=False):
     """
@@ -34,8 +36,8 @@ def sep(path, add_sep_before=False, add_sep_after=False):
         all_path = all_path + os.sep
     return all_path
 
+
 if __name__ == '__main__':
     # 测试一下
     print(get_project_path())
-    print(sep(["config","environment.yaml"], add_sep_before=True))
-
+    print(sep(["config", "environment.yaml"], add_sep_before=True))

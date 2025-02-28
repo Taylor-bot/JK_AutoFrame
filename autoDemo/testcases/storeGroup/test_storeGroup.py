@@ -25,7 +25,7 @@ class Test_storeGroup:
         # print(res.json())
         assert res.json()['data']['total'] > 0
 
-    @allure.title("")
+    @allure.title("查询自动报货门店组")
     @allure.description("测试根据管理者查询是否成功")
     @pytest.mark.parametrize("writeTokenToYaml", [1], indirect=True)
     def test_findByManager(self, writeTokenToYaml):
