@@ -54,7 +54,13 @@ def writeTokenToYaml(token):
         for key, value in data_item['headers'].items():
             if key == 'authorization':
                 data_item['headers'][key] = 'Bearer ' + token
-    return data
+    yield data
+    # 将替换后的数据写入yaml文件
+    with open('findStoreGroup.yaml', 'w', encoding='utf-8') as f:
+        # allow_unicode=True 参数的作用是让 yaml 库在写入文件时，以 Unicode 编码来处理字符串，这样中文字符就不会被转成 Unicode 转义序列。
+        # sort_keys=False 参数是为了保持字典的键值对顺序和原始数据一致，如果不设置这个参数 默认情况下 yaml.dump() 会对字典的键进行排序。
+        yaml.dump(data, f, allow_unicode=True, sort_keys=False)
+
 
 
 

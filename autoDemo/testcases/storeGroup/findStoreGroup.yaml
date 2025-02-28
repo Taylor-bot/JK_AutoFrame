@@ -1,31 +1,23 @@
-# 用例1 根据管理员名称
--
-    interface: "门店组查询接口"
-    name: "根据管理员查询用例"
-    url: "/supermarket-stock/api/v1/sm-erp/stock/reportStoreGroupPageInfo"
-    headers: {
-        "authorization": "{token}",
-        "client_id": "yunchao_erp"
-    }
-    json: {
-        "pageSize": 10,
-        "pageNum": 1,
-        "storeCodes": [],
-        "operatorIds": ["1846099485894115328"]
-    }
-
-# 用例2 根据报货门店组名
--
-    interface: "门店组查询接口"
-    name: "根据报货门店组名称查询用例"
-    url: "/supermarket-stock/api/v1/sm-erp/stock/reportStoreGroupPageInfo"
-    headers: {
-        "authorization": "{token}",
-        "client_id": "yunchao_erp"
-    }
-    json: {
-        "pageSize": 10,
-        "pageNum": 1,
-        "storeCodes": [],
-        "reportStoreGroupName": 1
-    }
+- interface: 门店组查询接口
+  name: 根据管理员查询用例
+  url: /supermarket-stock/api/v1/sm-erp/stock/reportStoreGroupPageInfo
+  headers:
+    authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiY29tbW9uLXNlY3VyaXR5IiwiZG93bmxvYWQtYWdncmVhdGlvbiJdLCJ1c2VyX25hbWUiOiIxODI3NTg4NzMwNSIsInNjb3BlIjpbImFsbCJdLCJleHAiOjE3NDMxMjQ5MDQsImF1dGhvcml0aWVzIjpbIlJPTEVfamFfc2NfZXJwXzUxNCIsIlJPTEVfamFfZmFybV9vcmRlcl9lcnBfNTk5IiwiUk9MRV9qYV9zaG9wX3B1cmNoYXNlXzUxNiIsIlJPTEVfYWFhXzUyMSIsIlJPTEVfamFfc2hvcF9tZXJjaGFudF81MDQiLCJST0xFX2phX2VycF81MTUiLCJST0xFX2phX3NjX3NhbGVfNTE5IiwiUk9MRV9qYV9zaG9wX293bmVyXzUxNyIsIlJPTEVfamFfc2hvcF9wbGF0Zm9ybV81MDYiLCJST0xFX2hlYWx0aF9lcnBfNTEwIiwiUk9MRV9kYXRhX2p1YWlfc2VydmljZV81MDkiLCJST0xFX3NoaXllX3dhcmVob3VzZV9lcnBfMTY2IiwiUk9MRV95dW5jaGFvX3Bvc18zNTMiLCJST0xFX2phX3Nob3BfY2FyXzUwNSIsIlJPTEVfeXVuY2hhb19lcnBfMzUyIiwiUk9MRV95dW5jaGFvX3BkYV8zNTEiLCJST0xFX2hlYWx0aF9idXNpbmVzc181MTEiLCJST0xFX2NvbW1vbl9wZXJtXzUwOCIsIlJPTEVfamFfc2hvcF9saWZlXzUwMyIsIlJPTEVfamFfc2hvcF9vZmZsaW5lXzUxOCIsIlJPTEVfYzFfNTA3Il0sImp0aSI6ImVjODQ5MTI2LWQ0YjAtNDRkNC1iMDU5LWM5ZGU4YWQ5MzkxNCIsImNsaWVudF9pZCI6Inl1bmNoYW9fZXJwIn0.G01K-ySQm_j2nXI_BQ8bMCtCchAlAfYwA2_UTdtBC88
+    client_id: yunchao_erp
+  json:
+    pageSize: 10
+    pageNum: 1
+    storeCodes: []
+    operatorIds:
+    - '1846099485894115328'
+- interface: 门店组查询接口
+  name: 根据报货门店组名称查询用例
+  url: /supermarket-stock/api/v1/sm-erp/stock/reportStoreGroupPageInfo
+  headers:
+    authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiY29tbW9uLXNlY3VyaXR5IiwiZG93bmxvYWQtYWdncmVhdGlvbiJdLCJ1c2VyX25hbWUiOiIxODI3NTg4NzMwNSIsInNjb3BlIjpbImFsbCJdLCJleHAiOjE3NDMxMjQ5MDQsImF1dGhvcml0aWVzIjpbIlJPTEVfamFfc2NfZXJwXzUxNCIsIlJPTEVfamFfZmFybV9vcmRlcl9lcnBfNTk5IiwiUk9MRV9qYV9zaG9wX3B1cmNoYXNlXzUxNiIsIlJPTEVfYWFhXzUyMSIsIlJPTEVfamFfc2hvcF9tZXJjaGFudF81MDQiLCJST0xFX2phX2VycF81MTUiLCJST0xFX2phX3NjX3NhbGVfNTE5IiwiUk9MRV9qYV9zaG9wX293bmVyXzUxNyIsIlJPTEVfamFfc2hvcF9wbGF0Zm9ybV81MDYiLCJST0xFX2hlYWx0aF9lcnBfNTEwIiwiUk9MRV9kYXRhX2p1YWlfc2VydmljZV81MDkiLCJST0xFX3NoaXllX3dhcmVob3VzZV9lcnBfMTY2IiwiUk9MRV95dW5jaGFvX3Bvc18zNTMiLCJST0xFX2phX3Nob3BfY2FyXzUwNSIsIlJPTEVfeXVuY2hhb19lcnBfMzUyIiwiUk9MRV95dW5jaGFvX3BkYV8zNTEiLCJST0xFX2hlYWx0aF9idXNpbmVzc181MTEiLCJST0xFX2NvbW1vbl9wZXJtXzUwOCIsIlJPTEVfamFfc2hvcF9saWZlXzUwMyIsIlJPTEVfamFfc2hvcF9vZmZsaW5lXzUxOCIsIlJPTEVfYzFfNTA3Il0sImp0aSI6ImVjODQ5MTI2LWQ0YjAtNDRkNC1iMDU5LWM5ZGU4YWQ5MzkxNCIsImNsaWVudF9pZCI6Inl1bmNoYW9fZXJwIn0.G01K-ySQm_j2nXI_BQ8bMCtCchAlAfYwA2_UTdtBC88
+    client_id: yunchao_erp
+  json:
+    pageSize: 10
+    pageNum: 1
+    storeCodes: []
+    reportStoreGroupName: 1
