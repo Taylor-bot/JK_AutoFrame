@@ -39,9 +39,9 @@ def token():
                     return token
 
     yield _token
-    # 后置处理函数，保证每次请求后，删除token文件
-    if os.path.exists(global_token_path):
-        os.remove(global_token_path)
+    # 后置处理函数，保证每次请求后，删除token文件，但是可以不删除，yield后面的脚本可以注销
+    # if os.path.exists(global_token_path):
+    #     os.remove(global_token_path)
 
 
 @pytest.fixture
