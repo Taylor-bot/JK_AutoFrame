@@ -11,6 +11,7 @@ from autoDemo.common.commom_requests import CommonRequests
 class Test_storeGroup:
     @allure.title("查询自动报货门店组")
     @allure.description("测试查询门店组数量是否大于0")
+    @pytest.mark.order(1)
     def test_findStoreGroup(self, token):
         header = {"authorization": "Bearer " + token('laoShe'), 'client_id': 'yunchao_erp'}
         # ：例如，\s 在正则表达式中表示空白字符，但在普通字符串中需要写成 \\s，而使用 r 前缀后可以直接写成 \s。
@@ -28,6 +29,7 @@ class Test_storeGroup:
     @allure.title("查询自动报货门店组")
     @allure.description("测试根据管理者查询是否成功")
     @pytest.mark.parametrize("writeTokenToYaml", [0,1], indirect=True)
+    @pytest.mark.order(2)
     def test_findByStoreGroupByArgs(self, writeTokenToYaml):
         args = writeTokenToYaml
         # print(args)
@@ -38,9 +40,10 @@ class Test_storeGroup:
     # 测试用例有几个，index就是n-1！！！多了会报错
     @allure.title("新增自动报货门店组")
     @allure.description("测试新增根据区域是否成功")
+    @pytest.mark.order(3)
     @pytest.mark.parametrize("writeToken",
                              [
-                                 {"filename": "addStoreGroup.yaml", "index": 0},
+                                 {"filename": "./addStoreGroup.yaml", "index": 0},
                                  # {"filename": "addStoreGroup.yaml", "index": 1}
 
                              ],
@@ -54,12 +57,12 @@ class Test_storeGroup:
     # 输出新增的报货门店组的id
     def findStoreGroupByName(self, token):
         # 写入token到findStoreGroupByName.yaml文件
-        with open('findStoreGroupByName.yaml', 'r', encoding='utf-8') as file:
+        with open('./findStoreGroupByName.yaml', 'r', encoding='utf-8') as file:
             data = yaml.load(file, Loader=yaml.FullLoader)
 
             data['headers']["authorization"] = 'Bearer ' + token('laoShe')
             # 读取reportStoreGroupName并写入到findStoreGroupByName.yaml文件
-            with open('addStoreGroup.yaml', 'r', encoding='utf-8') as f:
+            with open('./addStoreGroup.yaml', 'r', encoding='utf-8') as f:
                 addData = yaml.load(f, Loader=yaml.FullLoader)
                 data['json']['reportStoreGroupName'] = addData[0]['json']['reportStoreGroupName']
 
@@ -71,6 +74,7 @@ class Test_storeGroup:
 
     @allure.title("作废自动报货门店组")
     @allure.description("作废自动报货门店组是否成功")
+    @pytest.mark.order(4)
     def test_cancelStoreGroup(self, token):
         header = {"authorization": "Bearer " + token('laoShe'), 'client_id': 'yunchao_erp'}
         json = {
