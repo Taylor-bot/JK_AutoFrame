@@ -29,7 +29,6 @@ class Test_storeGroup:
     @allure.description("测试根据管理者查询是否成功")
     @pytest.mark.parametrize("writeTokenToYaml", [1], indirect=True)
     def test_findByManager(self, writeTokenToYaml):
-        args0, args1 = writeTokenToYaml
         for arg in writeTokenToYaml:
             res = CommonRequests(arg["headers"]).post_request(arg["url"], json=arg["json"])
             # print(res.json())
