@@ -35,6 +35,12 @@ class Test_storeGroup:
         res = CommonRequests(args["headers"]).post_request(args["url"], json=args["json"])
         assert res.json()['data']['total'] > 0 and res.json()['success'] is True
 
+    @pytest.mark.parametrize("writeToken",
+                             [
+                                 {"filename": "addStoreGroup.yaml"}
 
-
+                             ],
+                             indirect=True)
+    def test_readYamlFile(self, writeToken):
+        print(writeToken)
 
