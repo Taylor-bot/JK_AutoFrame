@@ -27,10 +27,14 @@ class Test_storeGroup:
 
     @allure.title("查询自动报货门店组")
     @allure.description("测试根据管理者查询是否成功")
-    @pytest.mark.parametrize("writeTokenToYaml", [1], indirect=True)
+    @pytest.mark.parametrize("writeTokenToYaml", [0,1], indirect=True)
     def test_findByManager(self, writeTokenToYaml):
-        for arg in writeTokenToYaml:
-            res = CommonRequests(arg["headers"]).post_request(arg["url"], json=arg["json"])
-            # print(res.json())
-            assert res.json()['data']['total'] > 0 and res.json()['success'] is True
+        args = writeTokenToYaml
+        # print(args)
+        # deepseek YYDS
+        res = CommonRequests(args["headers"]).post_request(args["url"], json=args["json"])
+        assert res.json()['data']['total'] > 0 and res.json()['success'] is True
+
+
+
 
