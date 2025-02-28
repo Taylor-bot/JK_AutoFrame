@@ -45,7 +45,7 @@ def conn_database_fun():
 
 @pytest.fixture(scope='function')
 def writeTokenToYaml(token):
-    with open('storeGroup.yaml', 'r', encoding='utf-8') as file:
+    with open('findStoreGroup.yaml', 'r', encoding='utf-8') as file:
         data = yaml.load(file, Loader=yaml.FullLoader)
     # 替换authorization中的token
     token = token('laoShe')
