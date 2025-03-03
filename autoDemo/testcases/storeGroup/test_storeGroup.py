@@ -1,3 +1,5 @@
+import os.path
+
 import allure
 import pytest
 import yaml
@@ -41,9 +43,10 @@ class Test_storeGroup:
     @allure.title("新增自动报货门店组")
     @allure.description("测试新增根据区域是否成功")
     @pytest.mark.order(3)
+    # @pytest.mark.skip
     @pytest.mark.parametrize("writeToken",
                              [
-                                 {"filename": "./addStoreGroup.yaml", "index": 0},
+                                 {"filename": "addStoreGroup.yaml", "index": 0},
                                  # {"filename": "addStoreGroup.yaml", "index": 1}
 
                              ],
@@ -56,17 +59,18 @@ class Test_storeGroup:
 
     # 输出新增的报货门店组的id
     def findStoreGroupByName(self, token):
+        absPath = os.path.dirname(__file__)
         # 写入token到findStoreGroupByName.yaml文件
-        with open('./findStoreGroupByName.yaml', 'r', encoding='utf-8') as file:
+        with open(os.path.join(absPath, 'findStoreGroupByName.yaml'), 'r', encoding='utf-8') as file:
             data = yaml.load(file, Loader=yaml.FullLoader)
 
             data['headers']["authorization"] = 'Bearer ' + token('laoShe')
-            # 读取reportStoreGroupName并写入到findStoreGroupByName.yaml文件
-            with open('./addStoreGroup.yaml', 'r', encoding='utf-8') as f:
+            # 读取addStoreGroup.yaml的reportStoreGroupName并写入到findStoreGroupByName.yaml文件
+            with open(os.path.join(absPath, 'addStoreGroup.yaml'), 'r', encoding='utf-8') as f:
                 addData = yaml.load(f, Loader=yaml.FullLoader)
                 data['json']['reportStoreGroupName'] = addData[0]['json']['reportStoreGroupName']
 
-            # print(data)
+            print(data)
             res = CommonRequests(data['headers']).post_request(data['url'], json=data['json'])
             return res.json()['data']['list'][0]['id']
 
@@ -75,10 +79,11 @@ class Test_storeGroup:
     @allure.title("作废自动报货门店组")
     @allure.description("作废自动报货门店组是否成功")
     @pytest.mark.order(4)
+    # @pytest.mark.skip
     def test_cancelStoreGroup(self, token):
         header = {"authorization": "Bearer " + token('laoShe'), 'client_id': 'yunchao_erp'}
         json = {
-            "id": self.findStoreGroupByName(token),
+            "id": self.findStoreGroupByName(token)
         }
         res = CommonRequests(header).post_request('/supermarket-stock/api/v1/sm-erp/stock/cancellationReportStoreGroup', json=json)
         print(res.json())

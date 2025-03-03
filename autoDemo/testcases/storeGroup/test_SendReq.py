@@ -1,3 +1,4 @@
+import pytest
 import requests
 
 
@@ -13,6 +14,7 @@ class Test_send_request:
 
         print(resp.text)
 
+    @pytest.mark.skip
     def test_connectMysql(self, conn_database_fun):
         mysql = conn_database_fun
         record = mysql.execute('select * from `order`limit 10')

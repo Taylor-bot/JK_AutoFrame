@@ -11,7 +11,6 @@ if __name__ == '__main__':
 # --alluredir=report生成测试报告的目录
 
 # 根据执行结果，生成测试报告，查看allure报告：
-# allure generate allure-results -o allure-report --clean
 # allure generate report -o ../../report/api_report --clean
 # --clean 选项表示在生成报告前先清空输出目录。
 

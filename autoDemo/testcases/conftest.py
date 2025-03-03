@@ -7,6 +7,8 @@ from autoDemo.common.tools import sep, get_project_path
 from autoDemo.common.login import login
 from autoDemo.common.mysql_operate import mysql
 
+currentPath = sep([get_project_path(),'testcases', 'storeGroup'])
+
 
 @pytest.fixture(scope='session')
 def token():
@@ -59,7 +61,7 @@ def conn_database_fun():
 def writeTokenToYaml(request, token):
     # 使用request.param接收参数化传递的用例索引
     case_index = request.param
-    with open('./findStoreGroup.yaml', 'r', encoding='utf-8') as file:
+    with open(os.path.join(currentPath, 'findStoreGroup.yaml'), 'r', encoding='utf-8') as file:
         data = yaml.load(file, Loader=yaml.FullLoader)
     # 替换authorization中的token
     token = token('laoShe')
@@ -67,7 +69,7 @@ def writeTokenToYaml(request, token):
     cases['headers']["authorization"] = 'Bearer ' + token
     yield cases
     # 将替换后的数据写入yaml文件
-    with open('./findStoreGroup.yaml', 'w', encoding='utf-8') as f:
+    with open(os.path.join(currentPath, 'findStoreGroup.yaml'), 'w', encoding='utf-8') as f:
         # allow_unicode=True 参数的作用是让 yaml 库在写入文件时，以 Unicode 编码来处理字符串，这样中文字符就不会被转成 Unicode 转义序列。
         # sort_keys=False 参数是为了保持字典的键值对顺序和原始数据一致，如果不设置这个参数 默认情况下 yaml.dump() 会对字典的键进行排序。
         yaml.dump(data, f, allow_unicode=True, sort_keys=False)
@@ -78,7 +80,7 @@ def writeToken(request, token):
     filename = request.param["filename"]  # 动态获取文件名
     # 使用request.param接收参数化传递的用例索引
     case_index = request.param["index"]
-    with open(filename, 'r', encoding='utf-8') as file:
+    with open(os.path.join(currentPath, filename), 'r', encoding='utf-8') as file:
         data = yaml.load(file, Loader=yaml.FullLoader)
     # 替换authorization中的token
     token = token('laoShe')
@@ -86,7 +88,5 @@ def writeToken(request, token):
     cases['headers']["authorization"] = 'Bearer ' + token
     yield cases
 
-
 # 该错误是因为在测试代码中直接调用了名为 get_token 的 fixture 函数。在 pytest 中，fixture 是通过依赖注入的方式自动提供给测试函数的参数，不应该被直接调用
 # 所以这里的写法不对，不能用main函数
-
